@@ -1,0 +1,23 @@
+const express = require("express")
+const app = express()
+require("dotenv").config()
+const body_parser = require("body-parser")
+const {sync, admins} = require("./sorce/db/sequelize")
+sync()
+
+app.use(express.urlencoded({extended : false}))
+app.set("view engine","ejs")
+app.use(express.static("public"))
+app.use(body_parser.json())
+const cors = require("cors")
+app.listen(process.env.PORT, ()=>{console.log("l'application tourne sur http://Localhost:"+2000)})
+app.use(cors())
+app.get("", (req,res)=>{
+    admins.findAll()
+     .then(admin =>{
+        res.status(200).json(admin)
+     })
+     .catch(er=>{console.log(er); res.status(500).json({message : "Fehler von server"})})
+})
+require("./request/logup")(app)
+require("./request/verbiden")(app)
