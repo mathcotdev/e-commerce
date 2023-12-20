@@ -1,5 +1,6 @@
 const {Sequelize, DataTypes} = require("sequelize")
 const admin = require("../models/admin")
+const pg = require("pg")
 
 const Db = new Sequelize(
   process.env.POSTGRES_URL +"?sslmode=require",
