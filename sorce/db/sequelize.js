@@ -2,12 +2,16 @@ const {Sequelize, DataTypes} = require("sequelize")
 const admin = require("../models/admin")
 
 const Db = new Sequelize(
-  process.env.POSTGRES_URL
+  process.env.POSTGRES_URL +"?sslmode=require",
+  {
+    dialect : "postgres",
+    ssl : "disable"
+  }
 )
 
 const admins = admin(Db, DataTypes)
 const sync = ()=>{
-    Db.sync()
+    Db.sync({force:true})
      .then(()=>{
       admins.create({
         name : "alfred",
