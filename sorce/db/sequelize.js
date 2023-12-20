@@ -2,18 +2,7 @@ const {Sequelize, DataTypes} = require("sequelize")
 const admin = require("../models/admin")
 
 const Db = new Sequelize(
-    "e-commerce",
-    "root",
-    "",
-    {
-        host : "localhost",
-        dialect : "mariadb",
-        dialectObtions: {
-          timezone: "Etc/GMT-2"
-        },
-        logging: false
-    
-      }
+  process.env.POSTGRES_URL
 )
 
 const admins = admin(Db, DataTypes)
